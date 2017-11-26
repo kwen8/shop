@@ -9,18 +9,17 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import VueRouter from 'vue-router';
-
-import router from './route';
+import router from './router';
 
 import iView from 'iview';
+import App from './app.vue'
 
 import 'iview/dist/styles/iview.css';
 
-Vue.use(VueRouter);
 Vue.use(iView)
 
 const app = new Vue({
     el: '#app',
-    router
+    router: router,
+    render: h => h(App)
 });

@@ -1,25 +1,23 @@
 <template>
-    <Menu :theme="menuTheme" active-name="1" width="auto">
-        <MenuGroup title="内容管理">
-            <MenuItem name="1">
-                <Icon type="document-text"></Icon>
-                文章管理
+    <Menu :theme="menuTheme" active-name="member_index" width="auto" @on-select=changeMenu>   
+        <template v-for="item in menuList">
+            <MenuItem v-if="item.children.length<=1" :name="item.children[0].name" :key="item.path">
+                <Icon :type="item.icon" :key="item.path"></Icon>
+                {{item.title}}
             </MenuItem>
-            <MenuItem name="2">
-                <Icon type="chatbubbles"></Icon>
-                评论管理
-            </MenuItem>
-        </MenuGroup>
-        <MenuGroup title="统计分析">
-            <MenuItem name="3">
-                <Icon type="heart"></Icon>
-                用户留存
-            </MenuItem>
-            <MenuItem name="4">
-                <Icon type="heart-broken"></Icon>
-                流失用户
-            </MenuItem>
-        </MenuGroup>
+            <Submenu v-if="item.children.length > 1" :name="item.name" :key="item.path">
+                <template slot="title">
+                    <Icon :type="item.icon" :size="iconSize"></Icon>
+                    <span class="layout-text">{{ item.title }}</span>
+                </template>
+                <template v-for="child in item.children">
+                    <MenuItem :name="child.name" :key="child.name">
+                        <Icon :type="child.icon" :size="iconSize" :key="child.name"></Icon>
+                        <span class="layout-text" :key="child.name">{{ child.title }}</span>
+                    </MenuItem>
+                </template>
+            </Submenu>
+        </template>
     </Menu>
 </template>
 <script>
@@ -34,6 +32,13 @@
             menuTheme: {
                 type: String,
                 default: 'dark'
+            },
+            menuList: Array,
+            iconSize: Number
+        },
+        methods: {
+            changeMenu (active) {
+                this.$emit('on-change', active);
             }
         }
     }

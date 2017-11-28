@@ -9,7 +9,9 @@
             :menu-theme="theme"
             @on-change="handleChange"
             :menu-list="menuList"
-        ></sidebar-menu>
+        >
+            <h1>shop</h1>
+        </sidebar-menu>
     </div>
 </template>
 

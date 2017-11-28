@@ -4,7 +4,11 @@
             <shrinkable-menu 
                 :theme="menuTheme"
                 :menu-list="menuList"
-            ></shrinkable-menu>
+            >
+                <div slot="top">
+                    <h1 style="color: #fff;text-align: center;">shop</h1>
+                </div>
+            </shrinkable-menu>
         </div>
         <div class="single-page-con" :style="{left: '200px'}">
             <div class="single-page">

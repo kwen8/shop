@@ -11,13 +11,13 @@ window.Vue = require('vue');
 
 import router from './router';
 
-const iView = require('iview');
-
 import App from './app.vue';
 
 import 'iview/dist/styles/iview.css';
 
-Vue.use(iView);
+import iView from 'iview';
+
+Vue.use(iView)
 
 const app = new Vue({
     el: '#app',

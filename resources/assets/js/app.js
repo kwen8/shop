@@ -11,6 +11,8 @@ window.Vue = require('vue');
 
 import { router } from './router';
 
+import store from './store'
+
 import App from './app.vue';
 
 import 'iview/dist/styles/iview.css';
@@ -22,5 +24,6 @@ Vue.use(iView)
 const app = new Vue({
     el: '#app',
     router: router,
+    store,
     render: h => h(App)
 });

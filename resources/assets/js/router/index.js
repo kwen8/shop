@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 export const router =  new VueRouter({
     routes: routers
 })
-console.log(routers);
+
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
     if(to.name !== 'login') {

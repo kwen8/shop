@@ -3,6 +3,7 @@
         <Row type="flex" justify="center" align="middle" class="login-page-con">
             <Col span="6">
                 <Card>
+                    <p slot="title">登录</p>
                     <login-form></login-form>
                 </Card>
             </Col>

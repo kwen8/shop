@@ -8,7 +8,7 @@
         </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formCustom')">登录</Button>
-            <Button type="ghost" @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
+            <Button type="ghost" @click="handleReset('formCustom')" style="margin-left: 8px">重置</Button>
         </FormItem>
     </Form>
 </template>
@@ -18,15 +18,15 @@
             const validateUser = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('请输入用户名'));
+                } else {
+                    callback()
                 }
             };
             const validatePassCheck = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('Please enter your password again'));
-                } else if (value !== this.formCustom.passwd) {
-                    callback(new Error('The two input passwords do not match!'));
+                    callback(new Error('请输入密码'));
                 } else {
-                    callback();
+                    callback()
                 }
             };
             return {
@@ -48,7 +48,7 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('Success!');
+                        this.$Message.success('登录成功!');
                     } else {
                         this.$Message.error('Fail!');
                     }

@@ -68378,8 +68378,6 @@ module.exports = function(module) {
 
 var _router = __webpack_require__("./resources/assets/js/router/index.js");
 
-var _router2 = _interopRequireDefault(_router);
-
 var _app = __webpack_require__("./resources/assets/js/app.vue");
 
 var _app2 = _interopRequireDefault(_app);
@@ -68406,7 +68404,7 @@ Vue.use(_iview2.default);
 
 var app = new Vue({
   el: '#app',
-  router: _router2.default,
+  router: _router.router,
   render: function render(h) {
     return h(_app2.default);
   }
@@ -68678,6 +68676,7 @@ module.exports = Component.exports
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.router = undefined;
 
 var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
@@ -68687,14 +68686,34 @@ var _vueRouter = __webpack_require__("./node_modules/vue-router/dist/vue-router.
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
+var _iview = __webpack_require__("./node_modules/iview/dist/iview.js");
+
+var _iview2 = _interopRequireDefault(_iview);
+
 var _router = __webpack_require__("./resources/assets/js/router/router.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueRouter2.default);
 
-exports.default = new _vueRouter2.default({
+var router = exports.router = new _vueRouter2.default({
     routes: _router.routers
+});
+console.log(_router.routers);
+router.beforeEach(function (to, from, next) {
+    _iview2.default.LoadingBar.start();
+    if (to.name !== 'login') {
+        next({
+            name: 'login'
+        });
+    } else {
+        next();
+    }
+});
+
+router.afterEach(function (to) {
+    _iview2.default.LoadingBar.finish();
+    window.scrollTo(0, 0);
 });
 
 /***/ }),

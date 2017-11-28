@@ -1,5 +1,14 @@
 import Main from '../components/Main'
 
+export const loginRouter = {
+    path: '/login',
+    name: 'login',
+    meta: {
+        title: 'Login - 登录'
+    },
+    component: resolve => { require(['../pages/login.vue'], resolve); }
+};
+
 export const otherRouter = {
     path: '/',
     component: Main
@@ -20,6 +29,7 @@ export const appRouter = [
 ]
 
 export const routers = [
+    loginRouter,
     otherRouter,
     ...appRouter
 ]

@@ -58,7 +58,9 @@ exports.default = {
 
             this.$refs[name].validate(function (valid) {
                 if (valid) {
-                    _this.$store.dispatch('login', _this.formCustom).then(function (res) {});
+                    _this.$store.dispatch('login', _this.formCustom).then(function (res) {
+                        console.log(res);
+                    });
                     _this.$Message.success('登录成功!');
                 } else {
                     _this.$Message.error('Fail!');

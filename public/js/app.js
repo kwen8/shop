@@ -69328,9 +69328,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     login: function login(userForm) {
-        return axios.post('/api/login', {
-            user: userForm.user,
-            password: userForm.password
+        return axios.post('/oauth/token', {
+            username: userForm.user,
+            password: userForm.password,
+            client_id: 2,
+            grant_type: 'password',
+            client_secret: '4tEUM5tzvvxrp9sE02eCK1XEn0K0aejpGgiXmfjd',
+            provider: 'admins',
+            scope: ''
         });
     }
 };
@@ -69343,21 +69348,25 @@ exports.default = {
 "use strict";
 
 
+var _vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _app = __webpack_require__("./resources/assets/js/app.vue");
+
+var _app2 = _interopRequireDefault(_app);
+
+var _iview = __webpack_require__("./node_modules/iview/dist/iview.js");
+
+var _iview2 = _interopRequireDefault(_iview);
+
 var _router = __webpack_require__("./resources/assets/js/router/index.js");
 
 var _store = __webpack_require__("./resources/assets/js/store/index.js");
 
 var _store2 = _interopRequireDefault(_store);
 
-var _app = __webpack_require__("./resources/assets/js/app.vue");
-
-var _app2 = _interopRequireDefault(_app);
-
 __webpack_require__("./node_modules/iview/dist/styles/iview.css");
-
-var _iview = __webpack_require__("./node_modules/iview/dist/iview.js");
-
-var _iview2 = _interopRequireDefault(_iview);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69369,11 +69378,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 __webpack_require__("./resources/assets/js/bootstrap.js");
 
-window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+_vue2.default.use(_iview2.default);
 
-Vue.use(_iview2.default);
-
-var app = new Vue({
+new _vue2.default({
   el: '#app',
   router: _router.router,
   store: _store2.default,
@@ -69467,6 +69474,7 @@ window.axios = __webpack_require__("./node_modules/axios/index.js");
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+window.axios.defaults.baseURL = 'http://shop.dev';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -69675,9 +69683,7 @@ var router = exports.router = new _vueRouter2.default({
 router.beforeEach(function (to, from, next) {
     _iview2.default.LoadingBar.start();
     if (to.name !== 'login') {
-        next({
-            name: 'login'
-        });
+        next();
     } else {
         next();
     }

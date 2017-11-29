@@ -49,7 +49,7 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.$store.dispatch('login', this.formCustom).then(res => {
-                            
+                            console.log(res);
                         })
                         this.$Message.success('登录成功!');
                     } else {

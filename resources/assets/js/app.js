@@ -5,25 +5,23 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue');
+import Vue from 'vue'
 
-import { router } from './router';
+import App from './app.vue'
+import iView from 'iview'
 
+import { router } from './router'
 import store from './store'
 
-import App from './app.vue';
-
-import 'iview/dist/styles/iview.css';
-
-import iView from 'iview';
+import 'iview/dist/styles/iview.css'
 
 Vue.use(iView)
 
-const app = new Vue({
+new Vue({
     el: '#app',
     router: router,
     store,
     render: h => h(App)
-});
+})

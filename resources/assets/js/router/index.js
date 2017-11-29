@@ -12,9 +12,7 @@ export const router =  new VueRouter({
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
     if(to.name !== 'login') {
-        next({
-            name: 'login'
-        });
+        next();
     } else {
         next();
     }

@@ -10,7 +10,6 @@
             @on-change="handleChange"
             :menu-list="menuList"
         >
-            <h1>shop</h1>
         </sidebar-menu>
     </div>
 </template>

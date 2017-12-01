@@ -1763,7 +1763,6 @@ exports.default = {
 //
 //
 //
-//
 
 /***/ }),
 
@@ -19852,8 +19851,14 @@ var render = function() {
             _c("div", { attrs: { slot: "top" }, slot: "top" }, [
               _c(
                 "h1",
-                { staticStyle: { color: "#fff", "text-align": "center" } },
-                [_vm._v("shop")]
+                {
+                  staticStyle: {
+                    color: "#fff",
+                    "text-align": "center",
+                    padding: "14px 24px"
+                  }
+                },
+                [_vm._v("admin")]
               )
             ])
           ]
@@ -19897,14 +19902,10 @@ var render = function() {
     [
       _vm._t("top"),
       _vm._v(" "),
-      _c(
-        "sidebar-menu",
-        {
-          attrs: { "menu-theme": _vm.theme, "menu-list": _vm.menuList },
-          on: { "on-change": _vm.handleChange }
-        },
-        [_c("h1", [_vm._v("shop")])]
-      )
+      _c("sidebar-menu", {
+        attrs: { "menu-theme": _vm.theme, "menu-list": _vm.menuList },
+        on: { "on-change": _vm.handleChange }
+      })
     ],
     2
   )
@@ -24372,6 +24373,10 @@ var _iview2 = _interopRequireDefault(_iview);
 
 var _router = __webpack_require__("./resources/assets/js/router/router.js");
 
+var _jwt = __webpack_require__("./resources/assets/js/helpers/jwt.js");
+
+var _jwt2 = _interopRequireDefault(_jwt);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueRouter2.default);
@@ -24382,8 +24387,14 @@ var router = exports.router = new _vueRouter2.default({
 
 router.beforeEach(function (to, from, next) {
     _iview2.default.LoadingBar.start();
-    if (to.name !== 'login') {
-        next();
+    if (!_jwt2.default.getToken() && to.name !== 'login') {
+        next({
+            name: 'login'
+        });
+    } else if (_jwt2.default.getToken() && to.name === 'login') {
+        next({
+            name: 'member'
+        });
     } else {
         next();
     }
@@ -24435,9 +24446,9 @@ var appRouter = exports.appRouter = [{
     name: 'member',
     title: '会员管理',
     component: _Main2.default,
-    children: [{ path: '/index', icon: 'person', title: '会员管理', name: 'member_index', component: function component(resolve) {
+    children: [{ path: 'index', icon: 'person', title: '会员管理', name: 'member_index', component: function component(resolve) {
             __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("./resources/assets/js/components/member/member.vue")]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
-        } }, { path: '/add', icon: 'person-add', title: '添加会员', name: 'member_add', component: function component(resolve) {
+        } }, { path: 'add', icon: 'person-add', title: '添加会员', name: 'member_add', component: function component(resolve) {
             __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("./resources/assets/js/components/member/add.vue")]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
         } }]
 }];

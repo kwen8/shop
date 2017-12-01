@@ -6,7 +6,7 @@
                 :menu-list="menuList"
             >
                 <div slot="top">
-                    <h1 style="color: #fff;text-align: center;">shop</h1>
+                    <h1 style="color: #fff;text-align: center;padding: 14px 24px;">admin</h1>
                 </div>
             </shrinkable-menu>
         </div>

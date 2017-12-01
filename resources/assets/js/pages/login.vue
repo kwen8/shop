@@ -1,7 +1,7 @@
 <template>
     <div class="login-page">
         <Row type="flex" justify="center" align="middle" class="login-page-con">
-            <Col span="6">
+            <Col :xs="20" :sm="12" :md="8" :lg="6">
                 <Card>
                     <p slot="title">登录</p>
                     <login-form></login-form>

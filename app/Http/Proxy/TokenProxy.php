@@ -2,6 +2,8 @@
 
 namespace App\Http\Proxy;
 
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 /**
 * TokenProxy
@@ -15,15 +17,37 @@ class TokenProxy
         $this->http = $http;
     }
 
-    public function adminLogin ($username, $password)
+    public function login ($username, $password, $provider)
     {
-        if(auth('admin')->attempt(['email' => $username, 'password' => $password])) {
+        switch ($provider) {
+            case 'admins':
+                $user = Admin::where('email', $username)->count();
+                $guard = 'admin';
+                break;
+            
+            case 'users':
+                $user = User::where('email', $username)->count();
+                $guard = 'web';
+                break;
+
+            default:
+                $user = '';
+                $guard = 'web';
+                break;
+        }
+        if(auth($guard)->attempt(['email' => $username, 'password' => $password])) {
             return $this->proxy('password', [
                 'username' => $username,
                 'password' => $password,
                 'scope' => '',
-                'provider' => 'admins'
+                'provider' => $provider
             ]);
+        }
+        if(!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => '该用户还没注册'
+            ], 421);
         }
         return response()->json([
             'status' => false,

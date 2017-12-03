@@ -44,6 +44,6 @@ class LoginController extends Controller
     public function login()
     {
         // $this->validateLogin(request());
-        return $this->proxy->adminLogin(request('username'), request('password'));
+        return $this->proxy->login(request('username'), request('password'), 'admins');
     }
 }

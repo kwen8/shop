@@ -51,8 +51,8 @@
                         this.$store.dispatch('login', this.formCustom).then(res => {
                             this.$Message.success('登录成功!')
                             this.$router.push({name: 'home'})
-                        }).catch(err => {
-                            console.log(err)
+                        }).catch(error => {
+                            this.$Message.error(error.response.data.message);
                         })
                     } else {
                         this.$Message.error('请完整填写表单');

@@ -11,9 +11,19 @@ import Vue from 'vue'
 
 import App from './app.vue'
 import iView from 'iview'
-
+import jwtToken from './helpers/jwt'
 import { router } from './router'
 import store from './store'
+
+axios.interceptors.request.use(function (config) {
+    if(jwtToken.getToken()) {
+        config.headers['Authorization'] = 'Bearer' + jwtToken.getToken()
+    }
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
 
 import 'iview/dist/styles/iview.css'
 

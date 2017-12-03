@@ -22,3 +22,5 @@ use App\Http\Resources\UserCollection as UserResource;
 Route::get('/user', function () {
     return new UserResource(User::all());
 })->middleware('auth:api');
+
+Route::post('/login', 'Auth\LoginController@login');

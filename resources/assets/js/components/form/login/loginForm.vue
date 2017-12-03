@@ -49,11 +49,13 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.$store.dispatch('login', this.formCustom).then(res => {
-                            
+                            this.$Message.success('登录成功!')
+                            this.$router.push({name: 'home'})
+                        }).catch(err => {
+                            console.log(err)
                         })
-                        this.$Message.success('登录成功!');
                     } else {
-                        this.$Message.error('Fail!');
+                        this.$Message.error('请完整填写表单');
                     }
                 })
             },

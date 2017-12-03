@@ -23999,14 +23999,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     login: function login(userForm) {
-        return axios.post('/oauth/token', {
+        return axios.post('/api/login', {
             username: userForm.user,
-            password: userForm.password,
-            client_id: 2,
-            grant_type: 'password',
-            client_secret: '4tEUM5tzvvxrp9sE02eCK1XEn0K0aejpGgiXmfjd',
-            provider: 'admins',
-            scope: ''
+            password: userForm.password
         });
     }
 };
@@ -24031,6 +24026,10 @@ var _iview = __webpack_require__("./node_modules/iview/dist/iview.js");
 
 var _iview2 = _interopRequireDefault(_iview);
 
+var _jwt = __webpack_require__("./resources/assets/js/helpers/jwt.js");
+
+var _jwt2 = _interopRequireDefault(_jwt);
+
 var _router = __webpack_require__("./resources/assets/js/router/index.js");
 
 var _store = __webpack_require__("./resources/assets/js/store/index.js");
@@ -24049,15 +24048,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 __webpack_require__("./resources/assets/js/bootstrap.js");
 
+axios.interceptors.request.use(function (config) {
+    if (_jwt2.default.getToken()) {
+        config.headers['Authorization'] = 'Bearer' + _jwt2.default.getToken();
+    }
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
 _vue2.default.use(_iview2.default);
 
 new _vue2.default({
-  el: '#app',
-  router: _router.router,
-  store: _store2.default,
-  render: function render(h) {
-    return h(_app2.default);
-  }
+    el: '#app',
+    router: _router.router,
+    store: _store2.default,
+    render: function render(h) {
+        return h(_app2.default);
+    }
 });
 
 /***/ }),
@@ -24437,6 +24446,7 @@ var loginRouter = exports.loginRouter = {
 
 var otherRouter = exports.otherRouter = {
     path: '/',
+    name: 'home',
     component: _Main2.default
 };
 
@@ -24524,11 +24534,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 exports.default = {
     state: {
-        name: '',
         token: ''
     },
     mutations: _defineProperty({}, types.USER_LOGIN, function (state, _ref) {
-        var token = _ref.token;
+        var token = _ref.token,
+            name = _ref.name;
 
         state.token = token;
     }),
@@ -24536,8 +24546,8 @@ exports.default = {
         login: function login(_ref2, userForm) {
             var commit = _ref2.commit;
 
-            _user2.default.login(userForm).then(function (res) {
-                _jwt2.default.setToken(res.data.access_token);
+            return _user2.default.login(userForm).then(function (res) {
+                _jwt2.default.setToken(res.data.token);
                 commit(types.USER_LOGIN, res.data);
             });
         }

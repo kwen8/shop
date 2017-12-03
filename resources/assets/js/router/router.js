@@ -11,6 +11,7 @@ export const loginRouter = {
 
 export const otherRouter = {
     path: '/',
+    name: 'home',
     component: Main
 }
 
